@@ -45,7 +45,8 @@ export function getTagProviderSettings(workspacePath: string | null | undefined)
     bootstrap: false,
     buefy: false,
     vuetify: false,
-    quasar: false,
+    quasar: false, // Quasar v1+
+    'quasar-framework': false, // Quasar pre v1
     nuxt: false,
     gridsome: false
   };
@@ -75,6 +76,17 @@ export function getTagProviderSettings(workspacePath: string | null | undefined)
     }
     if (packageJson.dependencies['vuetify']) {
       settings['vuetify'] = true;
+    }
+    // Quasar v1+:
+    if (packageJson.dependencies['quasar']) {
+      settings['quasar'] = true;
+    }
+    // Quasar pre v1:
+    if (
+      packageJson.dependencies['quasar-framework'] ||
+      packageJson.devDependencies['quasar-cli'] // supplied by quasar-cli
+    ) {
+      settings['quasar-framework'] = true;
     }
     if (
       packageJson.dependencies['nuxt'] ||
